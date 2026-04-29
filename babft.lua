@@ -149,39 +149,70 @@ local Tab = Window:Tab({
 	Icon = "house",
 	Locked = false,
 })
+Tab:Select()
 local didstart = false
-local Button = Tab:Button({
-	Title = "Start",
-	Desc = "Start the auto farm.",
-	Locked = false,
-	Callback = function()
-        stopautowin()
+local characteraddedconn
+local lastcharacter = game.Players.LocalPlayer.Character
+
+local function charadded()
+	if characteraddedconn then
+		characteraddedconn:Disconnect()
+		characteraddedconn = nil
+	end
+
+	characteraddedconn = game.Players.LocalPlayer.CharacterAdded:Connect(function(newchar)
+		if not didstart then
+			return
+		end
+
 		if autowinrunning then
 			stopautowin()
-            if characteraddedconn then
-                characteraddedconn:Disconnect()
-                characteraddedconn = nil
-            end
-		else
-			autowin()
-            if characteraddedconn then
-                characteraddedconn:Disconnect()
-                characteraddedconn = nil
-            end
-	        characteraddedconn = game.Players.LocalPlayer.CharacterAdded:Connect(function(newchar)
-			autowinrunning = false
-			haventrespawned = false
-			char = game.Players.LocalPlayer.Character
-			char:WaitForChild("HumanoidRootPart")
-			task.wait(0.5)
-			WindUI:Notify({
-				Title = "boat lover 3000",
-				Content = "detected respawn, restarting!",
-				Duration = 3,
-				Icon = "info",
-			})
+		end
+
+		autowinrunning = false
+
+		char = newchar
+		char:WaitForChild("HumanoidRootPart")
+		char:WaitForChild("Humanoid")
+
+		task.wait(1)
+
+		WindUI:Notify({
+			Title = "boat lover 3000",
+			Content = "detected respawn, restarting!",
+			Duration = 3,
+			Icon = "info",
+		})
+
+		task.spawn(function()
 			autowin()
 		end)
+	end)
+end
+
+charadded()
+
+local Button = Tab:Button({
+	Title = "Start",
+	Desc = "Starts auto farm.",
+	Locked = false,
+	Callback = function()
+		if autowinrunning then
+			stopautowin()
+			autowinrunning = false
+			Button:SetText("Start")
+			Button:SetTitle("Start auto farming")
+			if characteraddedconn then
+				characteraddedconn:Disconnect()
+				characteraddedconn = nil
+			end
+		else
+			didstart = true
+			charadded()
+			autowin()
+			autowinrunning = true
+			Button:SetText("Stop")
+			Button:SetTitle("Stop auto farming")
 		end
 	end,
 })
@@ -273,17 +304,33 @@ local Button5 = Tab1:Button({
 	Title = "View Chest",
 	Desc = "View the chest.",
 	Callback = function()
-        if workspace.CurrentCamera.CameraSubject == workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger then
-            workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-        else
-		    workspace.CurrentCamera.CameraSubject = workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger
-        end
+		if workspace.CurrentCamera.CameraSubject == workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger then
+			workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+		else
+			workspace.CurrentCamera.CameraSubject = workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger
+		end
 	end,
 })
 local Section2 = Tab1:Section({
 	Title = "This only applies after you start/restart the auto farm!",
 	Box = true,
 	TextXAlignment = "Center",
+})
+local Button6 = Tab1:Button({
+	Title = "Rejoin",
+	Desc = "Rejoin the server.",
+	Callback = function()
+		game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+	end,
+})
+local Button7 = Tab1:Button({
+	Title = "Server Hop",
+	Desc = "Hop to a different server.",
+	Callback = function()
+		loadstring(
+			game:HttpGet("https://raw.githubusercontent.com/Cesare0328/my-scripts/refs/heads/main/CachedServerhop.lua")
+		)()
+	end,
 })
 local haventrespawned = true
 function autowin()
@@ -365,7 +412,7 @@ function autowin()
 			v.CanCollide = false
 		end
 	end
-    workspace.CurrentCamera.FieldOfView = 120
+	workspace.CurrentCamera.FieldOfView = 120
 
 	anim.AnimationId = "rbxassetid://" .. animation
 	currentanim = hum:LoadAnimation(anim)
