@@ -155,12 +155,33 @@ local Button = Tab:Button({
 	Desc = "Start the auto farm.",
 	Locked = false,
 	Callback = function()
+        stopautowin()
 		if autowinrunning then
 			stopautowin()
-			didstart = false
+            if characteraddedconn then
+                characteraddedconn:Disconnect()
+                characteraddedconn = nil
+            end
 		else
 			autowin()
-			didstart = true
+            if characteraddedconn then
+                characteraddedconn:Disconnect()
+                characteraddedconn = nil
+            end
+	        characteraddedconn = game.Players.LocalPlayer.CharacterAdded:Connect(function(newchar)
+			autowinrunning = false
+			haventrespawned = false
+			char = game.Players.LocalPlayer.Character
+			char:WaitForChild("HumanoidRootPart")
+			task.wait(0.5)
+			WindUI:Notify({
+				Title = "boat lover 3000",
+				Content = "detected respawn, restarting!",
+				Duration = 3,
+				Icon = "info",
+			})
+			autowin()
+		end)
 		end
 	end,
 })
@@ -248,6 +269,17 @@ local Dropdown = Tab1:Dropdown({
 		animation = string.split(option, " ")[1]
 	end,
 })
+local Button5 = Tab1:Button({
+	Title = "View Chest",
+	Desc = "View the chest.",
+	Callback = function()
+        if workspace.CurrentCamera.CameraSubject == workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger then
+            workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+        else
+		    workspace.CurrentCamera.CameraSubject = workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger
+        end
+	end,
+})
 local Section2 = Tab1:Section({
 	Title = "This only applies after you start/restart the auto farm!",
 	Box = true,
@@ -333,6 +365,7 @@ function autowin()
 			v.CanCollide = false
 		end
 	end
+    workspace.CurrentCamera.FieldOfView = 120
 
 	anim.AnimationId = "rbxassetid://" .. animation
 	currentanim = hum:LoadAnimation(anim)
@@ -402,7 +435,7 @@ function autowin()
 	local tween4 = ts:Create(
 		char.HumanoidRootPart,
 		TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.Out),
-		{ CFrame = CFrame.new(-55.33697509765625, -362.5498352050781, 9492.3759765625) }
+		{ CFrame = workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger.CFrame }
 	)
 
 	tween4:Play()
@@ -414,7 +447,6 @@ function autowin()
 	if not autowinrunning then
 		return
 	end
-
 	local spawnedtask2 = task.spawn(function()
 		WindUI:Notify({
 			Title = "boat lover 3000",
@@ -422,9 +454,9 @@ function autowin()
 			Duration = 5,
 			Icon = "info",
 		})
-		while autowinrunning and haventrespawned do
-			char.HumanoidRootPart.CFrame = CFrame.new(-55.33697509765625, -361.0498352050781, 9491.87597656255)
-			task.wait(0.1)
+		while autowinrunning do
+			char.HumanoidRootPart.CFrame = workspace.BoatStages.NormalStages.TheEnd.GoldenChest.Trigger.CFrame
+			task.wait()
 		end
 		WindUI:Notify({
 			Title = "boat lover 3000",
@@ -609,23 +641,6 @@ end
 
 -- */  About Tab  /* --
 WindUI:SetTheme("Cyanile")
-game.Players.LocalPlayer.CharacterAdded:Connect(function(newchar)
-	if not didstart then
-		return
-	end
-	autowinrunning = false
-	haventrespawned = false
-	char = game.Players.LocalPlayer.Character
-	char:WaitForChild("HumanoidRootPart")
-	task.wait(0.5)
-	WindUI:Notify({
-		Title = "boat lover 3000",
-		Content = "detected respawn, restarting!",
-		Duration = 3,
-		Icon = "info",
-	})
-	autowin()
-end)
 
 local SupportTab = Window:Tab({
 	Title = "Support Me",
