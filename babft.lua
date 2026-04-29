@@ -264,9 +264,6 @@ function autowin()
 	if autowinrunning then
 		return
 	end
-    if workspace.BoatStages.OtherStages.LightHouseStage.Water then
-        workspace.BoatStages.OtherStages.LightHouseStage.Water:Destroy()
-    end
 	autowinrunning = true
 	WindUI:Notify({
 		Title = "boat lover 3000",
