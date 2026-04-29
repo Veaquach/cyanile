@@ -48,7 +48,7 @@ WindUI:AddTheme({
 	Text = Color3.fromRGB(255, 255, 255),
 	Placeholder = Color3.fromRGB(125, 125, 125),
 	Button = Color3.fromRGB(15, 40, 200),
-	Icon = Color3.fromRGB(0, 125, 255), 
+	Icon = Color3.fromRGB(0, 125, 255),
 
 	Hover = Color3.fromRGB(5, 175, 255),
 
@@ -61,23 +61,19 @@ WindUI:AddTheme({
 	DialogContent = Color3.fromRGB(255, 255, 255),
 	DialogIcon = Color3.fromRGB(5, 100, 230),
 
-
 	WindowTopbarButtonIcon = Color3.fromRGB(5, 100, 230),
 	WindowTopbarTitle = Color3.fromRGB(255, 255, 255),
 	WindowTopbarAuthor = Color3.fromRGB(125, 125, 125),
 	WindowTopbarIcon = Color3.fromRGB(0, 125, 255),
 
-
 	TabBackground = Color3.fromRGB(15, 40, 200),
 	TabTitle = Color3.fromRGB(255, 255, 255),
 	TabIcon = Color3.fromRGB(5, 100, 230),
-
 
 	ElementBackground = Color3.fromRGB(5, 15, 30),
 	ElementTitle = Color3.fromRGB(255, 255, 255),
 	ElementDesc = Color3.fromRGB(160, 160, 160),
 	ElementIcon = Color3.fromRGB(5, 100, 230),
-
 
 	PopupBackground = Color3.fromRGB(15, 15, 15),
 	PopupBackgroundTransparency = 0.15,
@@ -85,10 +81,8 @@ WindUI:AddTheme({
 	PopupContent = Color3.fromRGB(255, 255, 255),
 	PopupIcon = Color3.fromRGB(5, 100, 230),
 
-
 	Toggle = Color3.fromRGB(15, 40, 200),
 	ToggleBar = Color3.fromRGB(5, 100, 230),
-
 
 	Checkbox = Color3.fromRGB(15, 40, 200),
 	CheckboxIcon = Color3.fromRGB(5, 100, 230),
@@ -123,7 +117,7 @@ end
 
 -- */  Window  /* --
 local Window = WindUI:CreateWindow({
-	Title = "boat lover 3000",
+	Title = "boat lover 3000 | made by the glorious veaquach on discord",
 	--Author = "by .ftgs • Footagesus",
 	Folder = "boatlover",
 	Icon = "solar:folder-2-bold-duotone",
