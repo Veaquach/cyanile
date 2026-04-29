@@ -30,8 +30,8 @@ local fullSizeX = math.max(540 * scale, 300)
 local fullSizeY = math.max(580 * scale, 400)
 local minimizedSizeX = fullSizeX / 2
 local minimizedSizeY = math.max(30 * scale, 20)
-fr.Size = UDim2.new(0, fullSizeX, 0, fullSizeY)
-fr.Position = UDim2.new(0.5, -(fullSizeX / 2), 0.5, -(fullSizeY / 2))
+fr.Size = UDim2.new(0, 540, 0, 540)
+fr.Position = UDim2.new(0.5, -250, 0.5, -250)
 fr.Parent = cloneref(game:GetService("CoreGui")):WaitForChild("RobloxGui")
 fr.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 aui(fr, 12)
@@ -40,12 +40,12 @@ local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 30)
 title.Parent = fr
 title.Text = "Logging With Cyanile"
-title.Position = UDim2.new(0, math.max(90 * scale, isMobile and 35 or 75), 0, 0)
+title.Position = UDim2.new(0, 80, 0, 0)
 title.AnchorPoint = Vector2.new(0.5, 0)
 title.Parent = fr
 title.ZIndex = 12
 title.BackgroundTransparency = 1
-title.TextSize = math.max(14 * textScale, isMobile and 16 or 12)
+title.TextSize = 14
 title.Font = Enum.Font.GothamBold
 title.TextColor3 = Color3.fromRGB(15, 40, 200)
 local stroke6 = Instance.new("UIStroke")
@@ -61,8 +61,8 @@ canvasgr.Size = UDim2.new(1.1, 0, 1.1, 0)
 local closebtn = Instance.new("TextButton")
 closebtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 aui(closebtn, 4)
-closebtn.Size = UDim2.new(0, isMobile and 40 or 25, 0, isMobile and 40 or 25)
-closebtn.Position = UDim2.new(1, -60, 0, 3)
+closebtn.Size = UDim2.new(0, 25, 0, 25)
+closebtn.Position = UDim2.new(1, -90, 0, 3)
 closebtn.Text = "X"
 closebtn.TextColor3 = Color3.fromRGB(75, 75, 75)
 closebtn.AutoButtonColor = false
@@ -74,8 +74,8 @@ closebtn.ZIndex = 14
 local minbtn = Instance.new("TextButton")
 minbtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 aui(minbtn, 4)
-minbtn.Size = UDim2.new(0, isMobile and 40 or 25, 0, isMobile and 40 or 25)
-minbtn.Position = UDim2.new(1, -90, 0, 3)
+minbtn.Size = UDim2.new(0, 25, 0, 25)
+minbtn.Position = UDim2.new(1, -120, 0, 3)
 minbtn.Text = "^"
 minbtn.Rotation = 0
 minbtn.TextColor3 = Color3.fromRGB(75, 75, 75)
@@ -90,20 +90,20 @@ local tii = TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out
 local ts = cloneref(game:GetService("TweenService"))
 minbtn.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-		if fr.Size == UDim2.new(0, fullSizeX, 0, fullSizeY) then
-			ts:Create(fr, tii, { Size = UDim2.new(0, fullSizeX, 0, minimizedSizeY) }):Play()
+		if fr.Size == UDim2.new(0, 540, 0, 540) then
+			ts:Create(fr, tii, { Size = UDim2.new(0, 540, 0, 30) }):Play()
 			task.wait(0.25)
-			ts:Create(fr, tii, { Size = UDim2.new(0, minimizedSizeX, 0, minimizedSizeY) }):Play()
-			ts:Create(minbtn, tii, { Position = UDim2.new(0, minimizedSizeX - (isMobile and 40 or 25) - 10, 0, 0) })
+			ts:Create(fr, tii, { Size = UDim2.new(0, 240, 0, 30) }):Play()
+			ts:Create(minbtn, tii, { Position = UDim2.new(0, 220 - 25 - 10, 0, 0) })
 				:Play()
-			ts:Create(closebtn, tii, { Position = UDim2.new(0, minimizedSizeX - 10, 0, 0) }):Play()
+			ts:Create(closebtn, tii, { Position = UDim2.new(0, 220 - 10, 0, 0) }):Play()
 			ts:Create(minbtn, ti, { Rotation = 180 }):Play()
-		elseif fr.Size == UDim2.new(0, minimizedSizeX, 0, minimizedSizeY) then
-			ts:Create(fr, tii, { Size = UDim2.new(0, minimizedSizeX, 0, fullSizeY) }):Play()
+		elseif fr.Size == UDim2.new(0, 240, 0, 30) then
+			ts:Create(fr, tii, { Size = UDim2.new(0, 240, 0, 540) }):Play()
 			task.wait(0.25)
-			ts:Create(fr, tii, { Size = UDim2.new(0, fullSizeX, 0, fullSizeY) }):Play()
-			ts:Create(closebtn, tii, { Position = UDim2.new(1, isMobile and -100 or -82, 0, 3) }):Play()
-			ts:Create(minbtn, tii, { Position = UDim2.new(1, isMobile and -145 or -109, 0, 3) }):Play()
+			ts:Create(fr, tii, { Size = UDim2.new(0, 540, 0, 540) }):Play()
+			ts:Create(closebtn, tii, { Position = UDim2.new(1, -90, 0, 3) }):Play()
+			ts:Create(minbtn, tii, { Position = UDim2.new(1, -120, 0, 3) }):Play()
 			ts:Create(minbtn, ti, { Rotation = 0 }):Play()
 		end
 	end
@@ -173,8 +173,8 @@ grad.Color = ColorSequence.new({
 })
 grad.Parent = stroke
 local scrollfr = Instance.new("ScrollingFrame")
-scrollfr.Size = UDim2.new(0, fullSizeX - 10, 0, fullSizeY - 40)
-scrollfr.Position = UDim2.new(0, 5, 0, 35)
+scrollfr.Size = UDim2.new(0, 520, 0, 500)
+scrollfr.Position = UDim2.new(0, 10, 0, 30)
 scrollfr.Parent = canvasgr
 scrollfr.BackgroundTransparency = 0.15
 aui(scrollfr, 12)
@@ -219,11 +219,11 @@ function addlog(player, text, issys)
 		return namee
 	end
 	local label = Instance.new("TextLabel")
-	label.Size = UDim2.new(0, scrollfr.AbsoluteSize.X - (isMobile and 90 or 60), 0, 0)
+	label.Size = UDim2.new(0, scrollfr.AbsoluteSize.X - 60, 0, 0)
 	label.AutomaticSize = Enum.AutomaticSize.Y
 	label.TextXAlignment = Enum.TextXAlignment.Left
 	label.Font = Enum.Font.GothamBold
-	label.TextSize = math.max(14 * textScale, isMobile and 16 or 12)
+	label.TextSize = 14
 	label.TextWrapped = true
 	label.TextColor3 = Color3.fromRGB(255, 255, 255)
 	label.Text = issys and os.date("%I:%M:%S %p") .. " [SYSTEM]: " .. text
@@ -248,7 +248,7 @@ function addlog(player, text, issys)
 	end
 	if not issys then
 		local button = Instance.new("TextButton")
-		button.Size = UDim2.new(0, math.max(20 * buttonScale, isMobile and 30 or 20), 0, label.AbsoluteSize.Y)
+		button.Size = UDim2.new(0, 20, 0, label.AbsoluteSize.Y)
 		button.TextXAlignment = Enum.TextXAlignment.Center
 		button.Text = "GOTO"
 		button.Font = Enum.Font.GothamBold
@@ -259,7 +259,7 @@ function addlog(player, text, issys)
 		button.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 		aui(button, 12)
 		button.Parent = label
-		button.Position = UDim2.new(1, -(isMobile and 90 or 60), 0, 0)
+		button.Position = UDim2.new(1, -50, 0, 0)
 		button.InputBegan:Connect(function(input)
 			if
 				input.UserInputType == Enum.UserInputType.MouseButton1
@@ -271,7 +271,7 @@ function addlog(player, text, issys)
 			end
 		end)
 		local button2 = Instance.new("TextButton")
-		button2.Size = UDim2.new(0, math.max(20 * buttonScale, isMobile and 30 or 20), 0, label.AbsoluteSize.Y)
+		button2.Size = UDim2.new(0, 20, 0, label.AbsoluteSize.Y)
 		button2.TextXAlignment = Enum.TextXAlignment.Center
 		button2.Text = "COPY"
 		button2.Font = Enum.Font.GothamBold
@@ -282,7 +282,7 @@ function addlog(player, text, issys)
 		button2.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 		aui(button2, 12)
 		button2.Parent = label
-		button2.Position = UDim2.new(1, -(isMobile and 60 or 40), 0, 0)
+		button2.Position = UDim2.new(1, -25, 0, 0)
 		button2.InputBegan:Connect(function(input)
 			if
 				input.UserInputType == Enum.UserInputType.MouseButton1
@@ -292,7 +292,7 @@ function addlog(player, text, issys)
 			end
 		end)
 		local button3 = Instance.new("TextButton")
-		button3.Size = UDim2.new(0, math.max(20 * buttonScale, isMobile and 30 or 20), 0, label.AbsoluteSize.Y)
+		button3.Size = UDim2.new(0, 20, 0, label.AbsoluteSize.Y)
 		button3.TextXAlignment = Enum.TextXAlignment.Center
 		button3.Text = "HLGT"
 		button3.Font = Enum.Font.GothamBold
@@ -303,7 +303,7 @@ function addlog(player, text, issys)
 		button3.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 		aui(button3, 12)
 		button3.Parent = label
-		button3.Position = UDim2.new(1, -(isMobile and 30 or 20), 0, 0)
+		button3.Position = UDim2.new(1, 0, 0, 0)
 		button3.InputBegan:Connect(function(input)
 			if
 				input.UserInputType == Enum.UserInputType.MouseButton1
